@@ -91,7 +91,7 @@ TestApp is a C# application that sends emails using Gmail's OAuth authentication
 ## Configuration
 
 ### 1. AppSettings.json
-Create an `AppSettings.json` file in the root directory with the following structure:
+Create an `AppSettings.json` file in the root directory.
 
 
 ### 2. Google Project Auth JSON
