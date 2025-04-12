@@ -1,4 +1,4 @@
-# GmailOAuth# GmailOAuth
+# GmailOAuth
 
 GmailOAuth is a C# library designed to simplify the process of sending emails using Gmail's SMTP server with OAuth2 authentication. It supports both service account and user account authentication methods.
 
