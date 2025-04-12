@@ -125,4 +125,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) f
 
 ## Acknowledgments
 - [MimeKit](https://github.com/jstedfast/MimeKit) for email creation.
-- [GmailOAuth](https://github.com/your-gmail-oauth-library) for Gmail OAuth integration.
