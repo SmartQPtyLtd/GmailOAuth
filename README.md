@@ -35,7 +35,7 @@ GmailOAuth is a C# library designed to simplify the process of sending emails us
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
 
 # Gmail Daemon
 
@@ -121,7 +121,7 @@ The application performs the following steps:
 - If the email fails to send, the application will log the error to the console.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
 
 ## Acknowledgments
 - [MimeKit](https://github.com/jstedfast/MimeKit) for email creation.
