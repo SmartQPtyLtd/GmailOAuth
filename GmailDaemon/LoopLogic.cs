@@ -13,9 +13,9 @@ public static class LoopLogic
 {
     private const char Backslash = '\\';
     private const string MaxSize = nameof(MaxSize);
-    private const int SafeToExit = 1200000;
-    private const int ThrowAwayClient = 2400000;
-    private const int WaitBeforeRecheck = 120000;
+    private const int SafeToExit = 1800000; // 30 Mins
+    private const int ThrowAwayClient = 2400000; // 40 Mins
+    private const int WaitBeforeRecheck = 180000; // 3 Mins
     public static string[] GetEmlFiles(string directory) => Directory.GetFiles(directory, "*.eml", SearchOption.TopDirectoryOnly);
 
     public static async Task LoopAsync(ServiceAccount serviceAccount, AppSettings appSettings, bool continueOnError = false)
@@ -25,6 +25,8 @@ public static class LoopLogic
 
         while (IsRunning())
         {
+            Restart();
+
             // The sender email must be a Google Workspace account that has been granted domain-wide delegation to the service account.
             using (var client = await Smtp.CreateServiceAccountSmtpClientAsync(serviceAccount, appSettings.SenderEmail).ConfigureAwait(false))
             {
@@ -65,7 +67,7 @@ public static class LoopLogic
                 }
                 finally
                 {
-                    Restart();
+                    StopTheClock();
                 }
             }
 

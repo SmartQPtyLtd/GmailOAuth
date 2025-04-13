@@ -18,11 +18,7 @@ public static class LoopInfrastructure
 
     public static long GetElapsedMilliseconds() => _stopwatch.ElapsedMilliseconds;
 
-    public static void Initialize()
-    {
-        _stopwatch.Start();
-        _running = SetConsoleCtrlHandler(new HandlerRoutine(ConsoleCtrlCheck), true);
-    }
+    public static void Initialize() => _running = SetConsoleCtrlHandler(new HandlerRoutine(ConsoleCtrlCheck), true);
 
     public static bool IsRunning() => _running;
 
