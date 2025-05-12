@@ -27,7 +27,7 @@ if (string.IsNullOrWhiteSpace(appSettings.SenderEmail) || string.IsNullOrWhiteSp
     return;
 }
 
-// Assuming user made a mistake. Set Limit To 1MB (Change as needed)
+// Assuming a user made a mistake. Set Limit To 1MB (Change as needed)
 if (appSettings.MaxSize < 1048576)
     appSettings.MaxSize = 1048576;
 

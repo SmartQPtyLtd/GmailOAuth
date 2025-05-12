@@ -16,7 +16,6 @@ public static class LoopLogic
     private const int SafeToExit = 1800000; // 30 Mins
     private const int ThrowAwayClient = 2400000; // 40 Mins
     private const int WaitBeforeRecheck = 180000; // 3 Mins
-    public static string[] GetEmlFiles(string directory) => Directory.GetFiles(directory, "*.eml", SearchOption.TopDirectoryOnly);
 
     public static async Task LoopAsync(ServiceAccount serviceAccount, AppSettings appSettings, bool continueOnError = false)
     {
@@ -35,7 +34,7 @@ public static class LoopLogic
                     try
                     {
                         await foreach (var item in PickupFolderAsync(client!,
-                        GetEmlFiles(appSettings.EmlDirectoryPath), continueOnError, appSettings.MaxSize))
+                        Directory.GetFiles(appSettings.EmlDirectoryPath, "*.eml", SearchOption.TopDirectoryOnly), continueOnError, appSettings.MaxSize))
                             Console.WriteLine(item);
                     }
                     catch (Exception ex)
@@ -79,7 +78,7 @@ public static class LoopLogic
         StopTheClock();
     }
 
-    public static async IAsyncEnumerable<string> PickupFolderAsync(SmtpClient client, string[] files, bool continueOnError, int maxSize, bool keepFiles = false,
+    private static async IAsyncEnumerable<string> PickupFolderAsync(SmtpClient client, string[] files, bool continueOnError, int maxSize, bool keepFiles = false,
             int intervalInMilliseconds = 5000)
     {
         FileInfo fileInfo;
@@ -105,7 +104,7 @@ public static class LoopLogic
                     continue;
                 }
 
-                message = MimeMessage.Load(file);
+                message = await MimeMessage.LoadAsync(file).ConfigureAwait(false);
                 line.Append(string.Concat($"{DateTimeOffset.Now:O} | To: ", message.To.ToString(), ' '));
                 await Task.Delay(intervalInMilliseconds).ConfigureAwait(false);
                 await client.SendAsync(message);//.ConfigureAwait(true);

@@ -20,9 +20,7 @@ namespace GmailOAuth
                     Scopes = new[] { GmailService.Scope.MailGoogleCom, GmailService.Scope.GmailSend }
                 }.FromPrivateKey(serviceAccount.Private_key));
 
-            // Get access token
-            bool success = await credential.RequestAccessTokenAsync(CancellationToken.None).ConfigureAwait(false);
-            if (!success)
+            if (!await credential.RequestAccessTokenAsync(CancellationToken.None).ConfigureAwait(false))
                 throw new Exception("Error getting access token.");
 
             return await CreateSmtpClientAsync(senderEmail, credential.Token.AccessToken).ConfigureAwait(false);
@@ -34,7 +32,8 @@ namespace GmailOAuth
             {
                 ClientId = projectAuth.Installed.Client_id,
                 ClientSecret = projectAuth.Installed.Client_secret
-            }, new[] { "https://mail.google.com/" }, "user", CancellationToken.None, new FileDataStore("token.json", true)).ConfigureAwait(false);
+            }, new[] { "https://mail.google.com/" }, "user", CancellationToken.None,
+                new FileDataStore("token.json", true)).ConfigureAwait(false);
 
             return await CreateSmtpClientAsync(senderEmail, credential.Token.AccessToken).ConfigureAwait(false);
         }

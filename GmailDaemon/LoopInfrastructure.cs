@@ -2,10 +2,10 @@
 
 public static class LoopInfrastructure
 {
-    private static readonly System.Diagnostics.Stopwatch _stopwatch = new();
+    private static readonly System.Diagnostics.Stopwatch Stopwatch = new();
     private static bool _running;
 
-    private delegate bool HandlerRoutine(CtrlTypes CtrlType);
+    private delegate bool HandlerRoutine(CtrlTypes ctrlType);
 
     private enum CtrlTypes
     {
@@ -16,30 +16,27 @@ public static class LoopInfrastructure
         */
     }
 
-    public static long GetElapsedMilliseconds() => _stopwatch.ElapsedMilliseconds;
+    public static long GetElapsedMilliseconds() => Stopwatch.ElapsedMilliseconds;
 
-    public static void Initialize() => _running = SetConsoleCtrlHandler(new HandlerRoutine(ConsoleCtrlCheck), true);
+    public static void Initialize() => _running = SetConsoleCtrlHandler(new(ConsoleCtrlCheck), true);
 
     public static bool IsRunning() => _running;
 
-    public static void Restart() => _stopwatch.Restart();
+    public static void Restart() => Stopwatch.Restart();
 
     public static void StopRunning() => _running = false;
 
-    public static void StopTheClock() => _stopwatch.Stop();
+    public static void StopTheClock() => Stopwatch.Stop();
 
-    private static bool ConsoleCtrlCheck(CtrlTypes CtrlType)
+    private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
     {
-        if (CtrlType == CtrlTypes.CTRL_C_EVENT)
-        {
-            System.Console.WriteLine("CTRL+C Received!");
+        if (ctrlType != CtrlTypes.CTRL_C_EVENT)
+            return true;
 
-            return false;
-        }
-
-        return true;
+        System.Console.WriteLine("CTRL+C Received!");
+        return false;
     }
 
     [System.Runtime.InteropServices.DllImport("Kernel32")]
-    private static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+    private static extern bool SetConsoleCtrlHandler(HandlerRoutine handler, bool add);
 }

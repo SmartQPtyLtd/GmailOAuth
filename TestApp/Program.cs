@@ -36,7 +36,7 @@ if (projectAuth is null)
     return;
 }
 
-// Create email message
+// Create an email message
 using MimeMessage message = new();
 message.From.Add(new MailboxAddress(appSettings.From, appSettings.SenderEmail));
 message.To.Add(new MailboxAddress(appSettings.To, appSettings.ReceiverEmail));
